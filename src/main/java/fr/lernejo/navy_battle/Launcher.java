@@ -5,7 +5,7 @@ import java.io.IOException;
 
 public class Launcher
 {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, NumberFormatException  {
 
         if ( args.length != 1)
         {
@@ -13,7 +13,17 @@ public class Launcher
             System.exit(1);
         }
 
-        Server server = new Server(9876);
-        server.run();
+        int number = 0;
+        try {
+            number = Integer.parseInt(args[0]);
+            Server server = new Server(number);
+            // regarder la valeur de server pour les tests de run()
+            server.run();
+        }
+        catch (Exception e)
+        {
+            System.out.println("Not an Integer");
+            throw new NumberFormatException();
+        }
     }
 }

@@ -11,12 +11,12 @@ public class Server
 {
     // port par defaut
     int port = 9876;
+
     HttpServer server;
 
     // permet de gérer les URLs "/ping", "/game/api", ...
     public void handleRequest() throws IOException {
-        // CallHandler m_handle = new CallHandler();
-        HttpContext context = this.server.createContext("/ping");
+        HttpContext context = this.server.createContext("/");
         context.setHandler(new CallHandler());
 
     }
@@ -28,6 +28,7 @@ public class Server
 
     public void run() throws IOException
     {
+        // Lance IllegalArgumentException si port < 0
         InetSocketAddress socketAddress = new InetSocketAddress(this.port);
         server = HttpServer.create(socketAddress, 1);
         server.setExecutor(Executors.newFixedThreadPool(1));
