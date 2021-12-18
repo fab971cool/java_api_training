@@ -14,7 +14,7 @@ public class CallHandler implements HttpHandler
 
         // On récupère l'url en entier sous forme de string
         var url = exchange.getRequestURI().getPath();
-        if ("POST".equals(exchange.getRequestMethod()) && url.equals("/game/api"))
+        if ("POST".equals(exchange.getRequestMethod()) && url.equals("/game/start"))
         {
             handleGameRequest(exchange);
         }
@@ -22,7 +22,7 @@ public class CallHandler implements HttpHandler
             handlePingRequest(exchange);
         }
         else{
-            String body = " 404 Not found";
+            String body = "404 Not Found";
             exchange.sendResponseHeaders(404, body.length());
             try (OutputStream os = exchange.getResponseBody())
             {
@@ -41,7 +41,7 @@ public class CallHandler implements HttpHandler
     }
 
     public void handlePingRequest(HttpExchange exchange) throws IOException {
-        String body = "Hello";
+        String body = "OK";
         exchange.sendResponseHeaders(200, body.length());
         try (OutputStream os = exchange.getResponseBody())
         {
