@@ -1,6 +1,15 @@
 package fr.lernejo.navy_battle;
 
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
+import java.util.Scanner;
+
 
 // Tests = OK
 public class Launcher
@@ -17,6 +26,7 @@ public class Launcher
         try {
             number = Integer.parseInt(args[0]);
             Server server = new Server(number);
+
             // regarder la valeur de server pour les tests de run()
             server.run();
         }
