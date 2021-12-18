@@ -5,9 +5,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
+import java.net.*;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
 import java.util.Scanner;
 
 
@@ -16,7 +17,7 @@ public class Launcher
 {
     public static void main(String[] args) throws IOException, NumberFormatException  {
 
-        if ( args.length != 1)
+        if ( args.length < 1)
         {
             System.out.println("Veuillez spécifier le port d'écoute");
             System.exit(1);
@@ -29,6 +30,20 @@ public class Launcher
 
             // regarder la valeur de server pour les tests de run()
             server.run();
+
+            if (args.length == 2)
+            {
+                var client = HttpClient.newHttpClient();
+                HttpRequest requetePost = HttpRequest.newBuilder()
+                    .uri(URI.create(args[1] + "/api/game/start"))
+                    .setHeader("Accept", "application/json")
+                    .setHeader("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString("{\"id\":\"1\", \"url\":\"http://localhost:" + number + "\", \"message\":\"hello\"}"))
+                    .build();
+
+                var response = client.send(requetePost, HttpResponse.BodyHandlers.ofString());
+            }
+
         }
         catch (Exception e)
         {
