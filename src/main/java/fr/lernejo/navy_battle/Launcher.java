@@ -28,7 +28,6 @@ public class Launcher
             number = Integer.parseInt(args[0]);
             Server server = new Server(number);
 
-            // regarder la valeur de server pour les tests de run()
             server.run();
 
             if (args.length == 2)
@@ -49,7 +48,7 @@ public class Launcher
         catch (Exception e)
         {
             System.out.println("Not an Integer");
-            throw new NumberFormatException();
+            throw new NumberFormatException(e.getMessage());
         }
     }
 }

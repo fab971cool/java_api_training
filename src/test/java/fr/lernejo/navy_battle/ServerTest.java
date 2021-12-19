@@ -31,10 +31,6 @@ class ServerTest {
 
         var response = client.send(requetePost, HttpResponse.BodyHandlers.ofString());
 
-
-
         assertEquals (200 ,response.statusCode());;
-
-
     }
 }
