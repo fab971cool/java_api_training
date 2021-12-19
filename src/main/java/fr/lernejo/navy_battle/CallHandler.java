@@ -16,16 +16,15 @@ public class CallHandler implements HttpHandler
 
         // On récupère l'url en entier sous forme de string
         var url = exchange.getRequestURI().getPath();
-        if ("POST".equals(exchange.getRequestMethod()) && url.equals("/game/start") )
+        if ("POST".equals(exchange.getRequestMethod()) && url.equals("/api/game/start") )
         {
-            InputStream inputStream = exchange.getRequestBody();
-            if (parser.checkJson(inputStream))
+            if (parser.checkJson(exchange.getRequestBody()))
             {
                 handleGameRequest(exchange);
             }
             else
             {
-               handleRequest(exchange);
+                handleRequest(exchange);
             }
         }
         else if ("GET".equals(exchange.getRequestMethod()) && url.equals("/ping")){

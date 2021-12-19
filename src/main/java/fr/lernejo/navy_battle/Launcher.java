@@ -17,7 +17,7 @@ public class Launcher
 {
     public static void main(String[] args) throws IOException, NumberFormatException  {
 
-        if ( args.length < 1)
+        if ( args.length < 1 || args.length > 2)
         {
             System.out.println("Veuillez spécifier le port d'écoute");
             System.exit(1);
@@ -34,14 +34,15 @@ public class Launcher
             if (args.length == 2)
             {
                 var client = HttpClient.newHttpClient();
-                HttpRequest requetePost = HttpRequest.newBuilder()
+                HttpRequest requestePost = HttpRequest.newBuilder()
                     .uri(URI.create(args[1] + "/api/game/start"))
                     .setHeader("Accept", "application/json")
                     .setHeader("Content-Type", "application/json")
-                    .POST(HttpRequest.BodyPublishers.ofString("{\"id\":\"1\", \"url\":\"http://localhost:" + number + "\", \"message\":\"hello\"}"))
+                    .POST(HttpRequest.BodyPublishers.ofString("{\"id\":\"1\", \"url\":\"http://localhost:" + args[0] + "\", \"message\":\"hello\"}"))
                     .build();
 
-                var response = client.send(requetePost, HttpResponse.BodyHandlers.ofString());
+                var response = client.send(requestePost, HttpResponse.BodyHandlers.ofString());
+                System.out.println("Connection OK. \nReceived:\t"+response.body() +"\nStatus :\t" + response.statusCode());
             }
 
         }

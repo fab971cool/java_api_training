@@ -25,6 +25,8 @@ public class ParsingJson
     * */
     public boolean checkJson(InputStream inputStream) throws IOException, ValidationException
     {
+        if (inputStream == null)
+            return false;
         String request = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         JSONObject obj = new JSONObject(request);
 
