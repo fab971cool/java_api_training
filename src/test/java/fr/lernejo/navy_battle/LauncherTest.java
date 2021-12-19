@@ -51,7 +51,7 @@ class LauncherTest {
 
         //creer une requete
         HttpRequest requetePost = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:9765/ping"))
+            .uri(URI.create("http://localhost:9745/ping"))
             .GET()
             .build();
 
@@ -63,14 +63,15 @@ class LauncherTest {
     @Test
     void main_server_response_test() throws Exception {
 
-        Launcher.main(new String[]{String.valueOf(9735), "http://localhost:9765"});
+        Launcher.main(new String[]{"8432"});
+        Launcher.main(new String[]{"9735", "http://localhost:8432"});
 
         // creer un client
         var client = HttpClient.newHttpClient();
 
         //creer une requete
         HttpRequest requetePost = HttpRequest.newBuilder()
-            .uri(URI.create("http://localhost:9735/ping"))
+            .uri(URI.create("http://localhost:8432/ping"))
             .GET()
             .build();
 
