@@ -1,8 +1,7 @@
-package fr.lernejo.navy_battle;
+package fr.lernejo.navy_battle.ServerHandler;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
-import jdk.jfr.Name;
 import org.junit.jupiter.api.*;
 
 import java.io.BufferedReader;

@@ -1,4 +1,4 @@
-package fr.lernejo.navy_battle;
+package fr.lernejo.navy_battle.FileParser;
 
 import org.everit.json.schema.Schema;
 import org.everit.json.schema.ValidationException;
@@ -6,44 +6,30 @@ import org.everit.json.schema.loader.SchemaLoader;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Objects;
 
 public class ParsingJson
 {
-    public ParsingJson()
-    {
-
-    }
-
-    /*
-    *
-    *
-    * */
-    public boolean checkJson(InputStream inputStream) throws IOException, ValidationException
+    public boolean checkJson(InputStream inputStream, String fileSchema) throws IOException, ValidationException
     {
         String request = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         JSONObject obj = new JSONObject(request);
 
         // gerer le json avec un schema
-        /*JSONObject jsonSchema = new JSONObject(
-            new JSONTokener(Objects.requireNonNull(ParsingJson.class.getResourceAsStream("../schema/schema1.json"))));
-
+        var schemaStream = ParsingJson.class.getResourceAsStream(fileSchema);
+        if (schemaStream == null)
+            return false;
+        JSONObject jsonSchema = new JSONObject( new JSONTokener(schemaStream));
         Schema schema = SchemaLoader.load(jsonSchema);
-        try{
+        try{ // on test la validation de l'objet
             schema.validate(obj);
             return true;
         }
-        catch (Exception e)
-        {
-            System.out.println(e.getMessage());
+        catch(Exception e) {
             return false;
-        }*/
-
-        return (obj.has("id") && obj.has("url") && obj.has("message"));
+        }
     }
 
 
