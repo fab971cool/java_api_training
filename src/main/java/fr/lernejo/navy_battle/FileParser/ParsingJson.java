@@ -17,21 +17,19 @@ public class ParsingJson
         String request = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         JSONObject obj = new JSONObject(request);
 
-        // gerer le json avec un schema
         var schemaStream = ParsingJson.class.getResourceAsStream(fileSchema);
         if (schemaStream == null)
             return false;
         JSONObject jsonSchema = new JSONObject( new JSONTokener(schemaStream));
         Schema schema = SchemaLoader.load(jsonSchema);
-        try{ // on test la validation de l'objet
+        try{
             schema.validate(obj);
             return true;
         }
-        catch(Exception e) {
+        catch(Exception e){
             return false;
         }
     }
-
 
     public String generateJsonToString(String id, String url, String message)
     {
@@ -39,7 +37,14 @@ public class ParsingJson
         result.put("id", id);
         result.put("url", url);
         result.put("message", message);
-        
+        return result.toString();
+    }
+
+    public String generateResponse(String consequence, boolean shipLeft)
+    {
+        var result = new JSONObject();
+        result.put("consequence", consequence);
+        result.put("shipLeft", shipLeft);
         return result.toString();
     }
 }
