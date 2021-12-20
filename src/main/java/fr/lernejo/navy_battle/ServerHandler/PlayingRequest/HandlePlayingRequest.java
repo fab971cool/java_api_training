@@ -2,7 +2,6 @@ package fr.lernejo.navy_battle.ServerHandler.PlayingRequest;
 
 import com.sun.net.httpserver.HttpExchange;
 import fr.lernejo.navy_battle.FileParser.ParsingJson;
-
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.HashMap;
