@@ -10,9 +10,6 @@ import java.io.IOException;
 
 import java.io.InputStreamReader;
 import java.net.*;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.concurrent.Executors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,7 +37,7 @@ class CallHandlerTest
     }
 
     @Test
-    void handleNoRequest() throws IOException {
+    void handleNoRequest(){
         assertEquals(server, context.getServer());
     }
 
@@ -56,10 +53,9 @@ class CallHandlerTest
     }
 
     @Test
-    void Handle_No_Existing_Path_Request() throws IOException, InterruptedException {
+    void Handle_No_Existing_Path_Request() throws IOException{
         baseURL = new URL(target + "/erreur/chemin");
         server.start();
-        System.out.println("ouuuuuuuuuu");
         HttpURLConnection conn = (HttpURLConnection)baseURL.openConnection();
         conn.setRequestMethod("GET");
         assertEquals(404, conn.getResponseCode());
@@ -68,7 +64,7 @@ class CallHandlerTest
     }
 
     @Test
-    void Handle_good_fire_game_request() throws IOException, InterruptedException {
+    void Handle_good_fire_game_request() throws IOException{
         baseURL = new URL(target + "/api/game/fire?cell=A5");
         server.start();
         HttpURLConnection conn = (HttpURLConnection)baseURL.openConnection();
@@ -79,7 +75,7 @@ class CallHandlerTest
     }
 
     @Test
-    void Handle_bad_fire_game_request() throws IOException, InterruptedException {
+    void Handle_bad_fire_game_request() throws IOException{
         baseURL = new URL(target + "/api/game/fire?noEqual&missingCell=3");
         server.start();
         HttpURLConnection conn = (HttpURLConnection)baseURL.openConnection();

@@ -1,7 +1,5 @@
-
 package fr.lernejo.navy_battle;
 
-import fr.lernejo.navy_battle.*;
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 import fr.lernejo.navy_battle.ServerHandler.CallHandler;
@@ -17,14 +15,12 @@ public class Server
 
     HttpServer server;
     HttpContext context;
-
     public Server(int port)
     {
         this.port = port;
     }
 
-    public void run() throws IOException
-    {
+    public void run() throws IOException {
         // Lance IllegalArgumentException si port < 0
         InetSocketAddress socketAddress = new InetSocketAddress(this.port);
         server = HttpServer.create(socketAddress, 1);

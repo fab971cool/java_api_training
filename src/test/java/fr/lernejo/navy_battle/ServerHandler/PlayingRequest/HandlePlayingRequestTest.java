@@ -4,19 +4,19 @@ import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpServer;
 import fr.lernejo.navy_battle.ServerHandler.CallHandler;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.URI;
-import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.concurrent.Executors;
 
-import static org.junit.jupiter.api.Assertions.*;
+
 
 class HandlePlayingRequestTest {
 
@@ -53,8 +53,8 @@ class HandlePlayingRequestTest {
             .POST(HttpRequest.BodyPublishers.ofString("{\"No_id\":\"1\", \"url\":\"http://localhost:" + server.getAddress().getPort() + "\"}"))
             .build();
         var response = client.send(requetePost, HttpResponse.BodyHandlers.ofString());
-        assertEquals(400, response.statusCode());
-        assertEquals("Bad Request", response.body());
+        Assertions.assertEquals(400, response.statusCode());
+        Assertions.assertEquals("Bad Request", response.body());
     }
 
     @Test
@@ -68,7 +68,7 @@ class HandlePlayingRequestTest {
             .setHeader("Content-Type", "application/json")
             .POST(HttpRequest.BodyPublishers.ofString(" corps vide ou string simple ou mauvais format json"))
             .build();
-        assertThrows( IOException.class, ()-> {
+        Assertions.assertThrows( IOException.class, ()-> {
             client.send(requetePost, HttpResponse.BodyHandlers.ofString());
         });
     }
@@ -84,6 +84,6 @@ class HandlePlayingRequestTest {
             .POST(HttpRequest.BodyPublishers.ofString("{\"id\":\"1\", \"url\":\"http://localhost:" + server.getAddress().getPort() + "\", \"message\":\"hello\"}"))
             .build();
         var response = client.send(requetePost, HttpResponse.BodyHandlers.ofString());
-        assertEquals(202, response.statusCode());
+        Assertions.assertEquals(202, response.statusCode());
     }
 }

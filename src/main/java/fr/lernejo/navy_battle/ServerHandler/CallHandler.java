@@ -2,13 +2,10 @@ package fr.lernejo.navy_battle.ServerHandler;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.sun.security.auth.callback.TextCallbackHandler;
 import fr.lernejo.navy_battle.FileParser.ParsingJson;
 import fr.lernejo.navy_battle.ServerHandler.PlayingRequest.HandlePlayingRequest;
 import fr.lernejo.navy_battle.ServerHandler.SimpleRequest.HandleSimpleRequest;
-
 import java.io.IOException;
-import java.io.OutputStream;
 
 public class CallHandler implements HttpHandler
 {

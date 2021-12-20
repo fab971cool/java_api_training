@@ -1,15 +1,10 @@
 package fr.lernejo.navy_battle;
 
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.*;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Scanner;
 
 
 // Tests = OK
