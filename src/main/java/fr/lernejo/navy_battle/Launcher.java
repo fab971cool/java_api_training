@@ -22,16 +22,13 @@ public class Launcher
             System.out.println("Veuillez spécifier le port d'écoute");
             System.exit(1);
         }
-
         int number = 0;
         try {
             number = Integer.parseInt(args[0]);
             Server server = new Server(number);
 
             server.run();
-
-            if (args.length == 2)
-            {
+            if (args.length == 2) {
                 var client = HttpClient.newHttpClient();
                 HttpRequest requestePost = HttpRequest.newBuilder()
                     .uri(URI.create(args[1] + "/api/game/start"))
@@ -39,14 +36,11 @@ public class Launcher
                     .setHeader("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString("{\"id\":\"1\", \"url\":\"http://localhost:" + args[0] + "\", \"message\":\"hello\"}"))
                     .build();
-
                 var response = client.send(requestePost, HttpResponse.BodyHandlers.ofString());
                 System.out.println("Connection OK. \nReceived:\t"+response.body() +"\nStatus :\t" + response.statusCode());
             }
-
         }
-        catch (Exception e)
-        {
+        catch (Exception e) {
             System.out.println("Not an Integer");
             throw new NumberFormatException(e.getMessage());
         }
