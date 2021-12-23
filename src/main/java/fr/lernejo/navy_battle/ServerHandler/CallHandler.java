@@ -9,43 +9,44 @@ import java.io.IOException;
 
 public class CallHandler implements HttpHandler
 {
-    HandleSimpleRequest simpleRequest = new HandleSimpleRequest();
-    HandlePlayingRequest playingRequest = new HandlePlayingRequest();
-    boolean error = true;
-    ParsingJson parser = new ParsingJson();
+    
+
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-
-        // On récupère l'url en entier sous forme de string
+        HandlePlayingRequest playingRequest = new HandlePlayingRequest();
+        HandleSimpleRequest simpleRequest = new HandleSimpleRequest();
+        ParsingJson parser = new ParsingJson();
+        boolean error = true;
         var url = exchange.getRequestURI().getPath();
         if ("POST".equals(exchange.getRequestMethod()) && url.equals("/api/game/start") ) {
-            handleUrlPostRequest(url, exchange);
+            error = handleUrlPostRequest(url, exchange, simpleRequest, playingRequest, parser);
         }
-        else if ("GET".equals(exchange.getRequestMethod())){
-            handleUrlGetRequest(url, exchange);
+        if ("GET".equals(exchange.getRequestMethod())){
+            error = handleUrlGetRequest(url, exchange, simpleRequest, playingRequest );
         }
         if (error){
             simpleRequest.handleRequest(exchange);
         }
     }
 
-    public void handleUrlPostRequest(String url, HttpExchange exchange) throws IOException {
+    public boolean handleUrlPostRequest(String url, HttpExchange exchange, HandleSimpleRequest simpleRequest, HandlePlayingRequest playingRequest, ParsingJson parser ) throws IOException {
         if (parser.checkJson(exchange.getRequestBody(), "/schema/schema1.json"))
             playingRequest.handleGameRequest(exchange);
         else // modifer
             simpleRequest.handleBadRequest(exchange);
-        error = false;
+        return false;
     }
 
-    public void handleUrlGetRequest(String url, HttpExchange exchange) throws IOException {
+    public boolean handleUrlGetRequest(String url, HttpExchange exchange, HandleSimpleRequest simpleRequest, HandlePlayingRequest playingRequest) throws IOException {
         if (url.equals("/ping")) {
             simpleRequest.handlePingRequest(exchange);
-            error = false;
+            return false;
         }
         else if (url.equals("/api/game/fire")){
             playingRequest.handleFireRequest(exchange);
-            error = false;
+            return false;
         }
+        return true;
     }
 
 }

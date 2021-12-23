@@ -12,8 +12,8 @@ class ServerTest {
 
     @Test
     void run() throws IOException, InterruptedException {
-        Server server = new Server(9765);
-        server.run();
+        Server server = new Server();
+        server.run(9765);
 
         // creer un client
         var client = HttpClient.newHttpClient();

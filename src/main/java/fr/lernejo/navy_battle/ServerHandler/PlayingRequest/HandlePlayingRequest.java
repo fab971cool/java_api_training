@@ -4,12 +4,13 @@ import com.sun.net.httpserver.HttpExchange;
 import fr.lernejo.navy_battle.FileParser.ParsingJson;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HandlePlayingRequest
 {
-    ParsingJson parser = new ParsingJson();
+
 
     public void handleGameRequest(HttpExchange exchange) throws IOException {
         var port = exchange.getLocalAddress().getPort();
@@ -22,11 +23,13 @@ public class HandlePlayingRequest
     }
 
     public void handleFireRequest(HttpExchange exchange) throws IOException {
-
+        ParsingJson parser = new ParsingJson();
         String body = " ";
         Map<String, String> params = queryToMap(exchange.getRequestURI().getQuery());
         if (params.get("cell") != null) {
             body = parser.generateResponse("sunk", true);
+            //exchange.getResponseHeaders()
+            exchange.getResponseHeaders().add("Content-type", "application/json");
             exchange.sendResponseHeaders(202, body.length());
         }else{
             body = "missing cell query";
