@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class HandlePlayingRequest
 {
-    ParsingJson parser = new ParsingJson();
+
 
     public void handleGameRequest(HttpExchange exchange) throws IOException {
         var port = exchange.getLocalAddress().getPort();
@@ -22,7 +22,7 @@ public class HandlePlayingRequest
     }
 
     public void handleFireRequest(HttpExchange exchange) throws IOException {
-
+        ParsingJson parser = new ParsingJson();
         String body = " ";
         Map<String, String> params = queryToMap(exchange.getRequestURI().getQuery());
         if (params.get("cell") != null) {
