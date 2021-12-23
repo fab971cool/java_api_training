@@ -4,13 +4,12 @@ import com.sun.net.httpserver.HttpExchange;
 import fr.lernejo.navy_battle.FileParser.ParsingJson;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HandlePlayingRequest
 {
-
-
     public void handleGameRequest(HttpExchange exchange) throws IOException {
         var port = exchange.getLocalAddress().getPort();
         var parser = new ParsingJson();
@@ -21,20 +20,21 @@ public class HandlePlayingRequest
         }
     }
 
-    public void handleFireRequest(HttpExchange exchange) throws IOException {
+    public void handleFireRequest(HttpExchange exchange) throws IOException, NullPointerException {
         ParsingJson parser = new ParsingJson();
-        String body = " ";
-        Map<String, String> params = queryToMap(exchange.getRequestURI().getQuery());
-        if (params.get("cell") != null) {
+        String body; Map<String, String> params = queryToMap(exchange.getRequestURI().getQuery());
+        if (params == null) {
+            body = "missing cell query";
+            exchange.sendResponseHeaders(404, body.length());;
+        }
+        else if (params.get("cell") != null) {
             body = parser.generateResponse("sunk", true);
+            exchange.getResponseHeaders().add("Content-type", "application/json");
             exchange.sendResponseHeaders(202, body.length());
         }else{
             body = "missing cell query";
-            exchange.sendResponseHeaders(404, body.length());
-        }
-        try (OutputStream os = exchange.getResponseBody()) {
-            os.write(body.getBytes());
-        }
+            exchange.sendResponseHeaders(404, body.length());}
+        try (OutputStream os = exchange.getResponseBody()) {os.write(body.getBytes());}
     }
 
     public Map<String, String> queryToMap(String query) {
