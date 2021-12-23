@@ -84,4 +84,15 @@ class CallHandlerTest
         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
         assertEquals("missing cell query", in.readLine());
     }
+
+    @Test
+    void Handle_null_fire_game_request() throws IOException{
+        baseURL = new URL(target + "/api/game/fire");
+        server.start();
+        HttpURLConnection conn = (HttpURLConnection)baseURL.openConnection();
+        conn.setRequestMethod("GET");
+        assertEquals(404, conn.getResponseCode());
+        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+        assertEquals("missing cell query", in.readLine());
+    }
 }
