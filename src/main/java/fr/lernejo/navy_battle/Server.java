@@ -10,27 +10,21 @@ import java.util.concurrent.Executors;
 
 public class Server
 {
-    // port par defaut
-    int port = 9876;
+    public Server(){}
 
-    HttpServer server;
-    HttpContext context;
-    public Server(int port)
-    {
-        this.port = port;
-    }
-
-    public void run() throws IOException {
+    public void run(int port) throws IOException {
+        HttpServer server;
+        HttpContext context;
         // Lance IllegalArgumentException si port < 0
-        InetSocketAddress socketAddress = new InetSocketAddress(this.port);
+        InetSocketAddress socketAddress = new InetSocketAddress(port);
         server = HttpServer.create(socketAddress, 1);
         server.setExecutor(Executors.newFixedThreadPool(1));
 
         // permet de gérer les URLs "/ping", "/game/api", ...
-        context = this.server.createContext("/");
+        context = server.createContext("/");
         context.setHandler(new CallHandler());
 
-        this.server.start();
+        server.start();
     }
 
 }

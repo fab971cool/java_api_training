@@ -12,11 +12,9 @@ import java.nio.charset.StandardCharsets;
 
 public class ParsingJson
 {
-    public boolean checkJson(InputStream inputStream, String fileSchema) throws IOException, ValidationException
-    {
+    public boolean checkJson(InputStream inputStream, String fileSchema) throws IOException, ValidationException {
         String request = new String(inputStream.readAllBytes(), StandardCharsets.UTF_8);
         JSONObject obj = new JSONObject(request);
-
         var schemaStream = ParsingJson.class.getResourceAsStream(fileSchema);
         if (schemaStream == null)
             return false;
