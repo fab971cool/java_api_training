@@ -10,8 +10,8 @@ import java.net.http.HttpResponse;
 // Tests = OK
 public class Launcher
 {
-    public static void main(String[] args) throws NumberFormatException {
-        if ( args.length < 1 || args.length > 2) {
+    public static void main(String[] args) throws NumberFormatException  {
+        if ( args.length < 1 || args.length > 2){
             System.out.println("Veuillez spécifier le port d'écoute");
             System.exit(1);
         }int number = 0;
